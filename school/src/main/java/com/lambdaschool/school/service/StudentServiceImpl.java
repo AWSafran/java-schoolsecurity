@@ -1,5 +1,6 @@
 package com.lambdaschool.school.service;
 
+import com.lambdaschool.school.exception.ResourceNotFoundException;
 import com.lambdaschool.school.model.Course;
 import com.lambdaschool.school.model.Student;
 import com.lambdaschool.school.repository.StudentRepository;
@@ -27,10 +28,18 @@ public class StudentServiceImpl implements StudentService
     }
 
     @Override
-    public Student findStudentById(long id) throws EntityNotFoundException
+    public Student findStudentById(long id) throws ResourceNotFoundException
     {
-        return studrepos.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(Long.toString(id)));
+        System.out.println("Made it to service");
+        Student rtnStudent = studrepos.findByStudid(id);
+        
+        if(rtnStudent == null)
+        {
+            throw new ResourceNotFoundException("Could not find student with ID " + id);
+        }
+        
+        return rtnStudent;
+        
     }
 
     @Override
@@ -38,18 +47,22 @@ public class StudentServiceImpl implements StudentService
     {
         List<Student> list = new ArrayList<>();
         studrepos.findByStudnameContainingIgnoreCase(name, pageable).iterator().forEachRemaining(list::add);
+        if(list.size() == 0)
+        {
+            throw new ResourceNotFoundException("No students found with name " + name);
+        }
         return list;
     }
 
     @Override
-    public void delete(long id) throws EntityNotFoundException
+    public void delete(long id) throws ResourceNotFoundException
     {
         if (studrepos.findById(id).isPresent())
         {
             studrepos.deleteById(id);
         } else
         {
-            throw new EntityNotFoundException(Long.toString(id));
+            throw new ResourceNotFoundException("Could not delete student, no student found with Id: " + id);
         }
     }
 

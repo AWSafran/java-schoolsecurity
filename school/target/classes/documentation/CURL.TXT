@@ -1,0 +1,2 @@
+curl -X POST --user "lambda-client:lambda-secret" -d "grant_type=password&username=admin&password=password" http://localhost:2020/oauth/token
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 798269ff-f8e5-4cd6-8190-508b7a73e594" http://localhost:2020/students/students

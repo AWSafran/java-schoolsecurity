@@ -50,12 +50,13 @@ public class StudentController
             @ApiResponse(code = 201, message = "Student Found", response = Student.class),
             @ApiResponse(code = 404, message = "Student not found", response = ErrorDetail.class)
     })
-    @GetMapping(value = "/Student/{StudentId}",
+    @GetMapping(value = "/student/{StudentId}",
                 produces = {"application/json"})
     public ResponseEntity<?> getStudentById(
             @PathVariable
                     Long StudentId)
     {
+        System.out.println("Made it to controller");
         Student r = studentService.findStudentById(StudentId);
         return new ResponseEntity<>(r, HttpStatus.OK);
     }
@@ -75,7 +76,7 @@ public class StudentController
         return new ResponseEntity<>(myStudents, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Creates a New Student", notes = "The newly created student will be sent in the location header", response = void.class)
+    @ApiOperation(value = "Creates a New Student", notes = "The newly created student will be sent in the location header" , response = void.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Student created successfully", response = void.class),
             @ApiResponse(code = 500, message = "Error Creating Student", response = ErrorDetail.class)
