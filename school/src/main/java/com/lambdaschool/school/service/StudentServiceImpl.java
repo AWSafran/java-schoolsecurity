@@ -73,6 +73,8 @@ public class StudentServiceImpl implements StudentService
         Student newStudent = new Student();
 
         newStudent.setStudname(student.getStudname());
+    
+        System.out.println(newStudent.toString());
 
         return studrepos.save(newStudent);
     }

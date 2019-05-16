@@ -88,6 +88,7 @@ public class StudentController
                                            @RequestBody
                                                    Student newStudent) throws URISyntaxException
     {
+        System.out.println("Adding a student" + newStudent.toString());
         newStudent = studentService.save(newStudent);
 
         // set the location header for the newly created resource
